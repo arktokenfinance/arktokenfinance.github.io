@@ -7,11 +7,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <style>
         body { background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 10px; }
-        .wrapper { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 15px; }
-        .main-logo { width: 100%; border-radius: 15px; border: 1px solid #d4af37; display: block; }
+        .wrapper { width: 100%; max-width: 400px; }
         
-        /* کادر اصلی که همه چیز داخلش است */
-        .content-box { border: 1px solid #d4af37; padding: 15px; border-radius: 15px; background: #0a0a0a; display: flex; flex-direction: column; gap: 10px; }
+        /* کادر اصلی که لوگو و همه چیز داخل آن است */
+        .content-box { border: 2px solid #d4af37; padding: 15px; border-radius: 15px; background: #0a0a0a; display: flex; flex-direction: column; gap: 15px; }
+        
+        .main-logo { width: 100%; border-radius: 10px; display: block; }
         
         .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { padding: 12px; border: 1px solid #d4af37; background: #000; color: #fff; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 14px; text-align: center; }
@@ -22,11 +23,10 @@
 <body>
 
 <div class="wrapper">
-    <!-- تصویر لوگو -->
-    <img src="lxM91ECNnGD2uqekhM2jQ4f-ahs-dC6WcPhuRdKF1Htq27YZcA.png" alt="ARK Logo" class="main-logo">
-
-    <!-- کادرِ حاویِ همه دکمه‌ها -->
+    <!-- کادر اصلی که همه چیز داخل آن است -->
     <div class="content-box">
+        <img src="lxM91ECNnGD2uqekhM2jQ4f-ahs-dC6WcPhuRdKF1Htq27YZcA.png" alt="ARK Logo" class="main-logo">
+        
         <select id="langSwitcher" onchange="changeLanguage()">
             <option value="en">English</option> <option value="fa">فارسی</option> <option value="ar">العربية</option>
             <option value="zh">中文</option> <option value="es">Español</option> <option value="fr">Français</option>
