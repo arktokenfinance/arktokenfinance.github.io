@@ -6,67 +6,72 @@
     <title>ARK Token Finance</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <style>
-        body { background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; margin: 0; padding: 10px; }
-        .container { width: 100%; max-width: 400px; text-align: center; }
-        .main-logo { width: 100%; border-radius: 15px; margin-bottom: 20px; border: 1px solid #d4af37; }
-        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        body { background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 10px; }
+        .wrapper { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 15px; }
+        .main-logo { width: 100%; border-radius: 15px; border: 1px solid #d4af37; display: block; }
+        
+        /* کادر اصلی که همه چیز داخلش است */
+        .content-box { border: 1px solid #d4af37; padding: 15px; border-radius: 15px; background: #0a0a0a; display: flex; flex-direction: column; gap: 10px; }
+        
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { padding: 12px; border: 1px solid #d4af37; background: #000; color: #fff; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 14px; text-align: center; }
-        .full-width { width: 100%; padding: 15px; background: #d4af37; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: black; font-size: 16px; margin-top: 10px; }
-        select { background: #000; color: #d4af37; padding: 12px; width: 100%; border: 1px solid #d4af37; border-radius: 8px; }
+        .full-width { width: 100%; padding: 15px; background: #d4af37; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: black; font-size: 16px; }
+        select { background: #000; color: #d4af37; padding: 12px; width: 100%; border: 1px solid #d4af37; border-radius: 8px; font-size: 14px; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- استفاده از نام فایل دقیق شما -->
+<div class="wrapper">
+    <!-- تصویر لوگو -->
     <img src="lxM91ECNnGD2uqekhM2jQ4f-ahs-dC6WcPhuRdKF1Htq27YZcA.png" alt="ARK Logo" class="main-logo">
 
-    <!-- انتخاب زبان -->
-    <select id="langSwitcher" onchange="changeLanguage()">
-        <option value="en">English</option> <option value="fa">فارسی</option> <option value="ar">العربية</option>
-        <option value="zh">中文</option> <option value="es">Español</option> <option value="fr">Français</option>
-        <option value="de">Deutsch</option> <option value="ru">Русский</option> <option value="pt">Português</option>
-        <option value="hi">हिन्दी</option> <option value="ja">日本語</option> <option value="tr">Türkçe</option>
-        <option value="it">Italiano</option> <option value="ko">한국어</option> <option value="nl">Nederlands</option>
-        <option value="el">Ελληνικά</option> <option value="vi">Tiếng Việt</option> <option value="id">Bahasa</option>
-        <option value="th">ไทย</option> <option value="ur">اردو</option>
-    </select>
+    <!-- کادرِ حاویِ همه دکمه‌ها -->
+    <div class="content-box">
+        <select id="langSwitcher" onchange="changeLanguage()">
+            <option value="en">English</option> <option value="fa">فارسی</option> <option value="ar">العربية</option>
+            <option value="zh">中文</option> <option value="es">Español</option> <option value="fr">Français</option>
+            <option value="de">Deutsch</option> <option value="ru">Русский</option> <option value="pt">Português</option>
+            <option value="hi">हिन्दी</option> <option value="ja">日本語</option> <option value="tr">Türkçe</option>
+            <option value="it">Italiano</option> <option value="ko">한국어</option> <option value="nl">Nederlands</option>
+            <option value="el">Ελληνικά</option> <option value="vi">Tiếng Việt</option> <option value="id">Bahasa</option>
+            <option value="th">ไทย</option> <option value="ur">اردو</option>
+        </select>
 
-    <!-- دکمه‌ها -->
-    <div class="grid-menu" style="margin-top:10px;">
-        <button class="btn" id="t-support" onclick="openSupport()">Support</button>
-        <a href="https://t.me/YOUR_TELEGRAM" class="btn" id="t-telegram">Telegram</a>
-        <a href="https://instagram.com/YOUR_INSTA" class="btn" id="t-insta">Instagram</a>
-        <div class="btn" id="date"></div>
+        <div class="grid-menu">
+            <button class="btn" id="t-support" onclick="openSupport()">Support</button>
+            <a href="https://t.me/YOUR_TELEGRAM" class="btn" id="t-telegram">Telegram</a>
+            <a href="https://instagram.com/YOUR_INSTA" class="btn" id="t-insta">Instagram</a>
+            <div class="btn" id="date"></div>
+        </div>
+
+        <div class="btn" id="t-price" style="border-color:#d4af37; color:#d4af37; font-weight: bold;">1 ARK = 0.001 USDT</div>
+        <button class="full-width" id="t-buy" onclick="buyToken()">Buy Token Now</button>
+        <div id="status" style="font-size:14px; color:#d4af37; text-align:center;"></div>
     </div>
-
-    <div class="btn" id="t-price" style="border-color:#d4af37; color:#d4af37;">1 ARK = GAPGPTMASKTOKENvibecgmh2kpX0X USDT</div>
-    <button class="full-width" id="t-buy" onclick="buyToken()">Buy Token Now</button>
-    <div id="status" style="margin-top:15px; font-size:14px; color:#d4af37;"></div>
 </div>
 
 <script>
     const t = {
-        'en': { sup: 'Support', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX1X USDT', buy: 'Buy Token Now' },
-        'fa': { sup: 'پشتیبانی', tg: 'تلگرام', ins: 'اینستاگرام', pr: '۱ توکن = GAPGPTMASKTOKENvibecgmh2kpX2X تتر', buy: 'خرید فوری' },
-        'ar': { sup: 'الدعم', tg: 'تيليجرام', ins: 'انستغرام', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX3X USDT', buy: 'شراء الآن' },
-        'zh': { sup: '支持', tg: '电报', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX4X USDT', buy: '立即购买' },
-        'es': { sup: 'Soporte', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX5X USDT', buy: 'Comprar' },
-        'fr': { sup: 'Support', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX6X USDT', buy: 'Acheter' },
-        'de': { sup: 'Hilfe', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX7X USDT', buy: 'Kaufen' },
-        'ru': { sup: 'Поддержка', tg: 'Телеграм', ins: 'Инстаграм', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX8X USDT', buy: 'Купить' },
-        'pt': { sup: 'Suporte', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX9X USDT', buy: 'Comprar' },
-        'hi': { sup: 'सहायता', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX10X USDT', buy: 'खरीदें' },
-        'ja': { sup: 'サポート', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX11X USDT', buy: '購入' },
-        'tr': { sup: 'Destek', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX12X USDT', buy: 'Hemen Al' },
-        'it': { sup: 'Supporto', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX13X USDT', buy: 'Acquista' },
-        'ko': { sup: '지원', tg: '텔레그램', ins: '인스타그램', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX14X USDT', buy: '구매' },
-        'nl': { sup: 'Ondersteuning', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX15X USDT', buy: 'Kopen' },
-        'el': { sup: 'Υποστήριξη', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX16X USDT', buy: 'Αγορά' },
-        'vi': { sup: 'Hỗ trợ', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX17X USDT', buy: 'Mua' },
-        'id': { sup: 'Dukungan', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX18X USDT', buy: 'Beli' },
-        'th': { sup: 'ซัพพอร์ต', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX19X USDT', buy: 'ซื้อ' },
-        'ur': { sup: 'مدد', tg: 'ٹیلیگرام', ins: 'انسٹاگرام', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX20X USDT', buy: 'خریدیں' }
+        'en': { sup: 'Support', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Buy Token Now' },
+        'fa': { sup: 'پشتیبانی', tg: 'تلگرام', ins: 'اینستاگرام', pr: '۱ توکن = ۰.۰۰۱ تتر', buy: 'خرید فوری' },
+        'ar': { sup: 'الدعم', tg: 'تيليجرام', ins: 'انستغرام', pr: '1 ARK = 0.001 USDT', buy: 'شراء الآن' },
+        'zh': { sup: '支持', tg: '电报', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: '立即购买' },
+        'es': { sup: 'Soporte', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Comprar' },
+        'fr': { sup: 'Support', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Acheter' },
+        'de': { sup: 'Hilfe', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Kaufen' },
+        'ru': { sup: 'Поддержка', tg: 'Телеграм', ins: 'Инстаграм', pr: '1 ARK = 0.001 USDT', buy: 'Купить' },
+        'pt': { sup: 'Suporte', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Comprar' },
+        'hi': { sup: 'सहायता', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'खरीदें' },
+        'ja': { sup: 'サポート', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: '購入' },
+        'tr': { sup: 'Destek', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Hemen Al' },
+        'it': { sup: 'Supporto', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Acquista' },
+        'ko': { sup: '지원', tg: '텔레그램', ins: '인스타그램', pr: '1 ARK = 0.001 USDT', buy: '구매' },
+        'nl': { sup: 'Ondersteuning', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Kopen' },
+        'el': { sup: 'Υποστήριξη', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Αγορά' },
+        'vi': { sup: 'Hỗ trợ', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Mua' },
+        'id': { sup: 'Dukungan', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Beli' },
+        'th': { sup: 'ซัพพอร์ต', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'ซื้อ' },
+        'ur': { sup: 'مدد', tg: 'ٹیلیگرام', ins: 'انسٹاگرام', pr: '1 ARK = 0.001 USDT', buy: 'خریدیں' }
     };
 
     function changeLanguage() {
