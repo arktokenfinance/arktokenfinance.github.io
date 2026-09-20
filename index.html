@@ -1,169 +1,80 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARK Token Finance</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: url('lxM91ECNnG2uqekhM2jQ4f-ahs-dC6WcPhuRdKF1Htq27YZcA.png') no-repeat center center fixed;
+        body { 
+            background-image: url('lxM91ECNnG2uqekhM2jQ4f-ahs-dC6WcPhuRdKF1Htq27YZcA.png');
             background-size: cover;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #ffd700;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0; padding: 20px; text-align: center; font-family: Arial, sans-serif; color: #d4af37;
         }
-        .main-container {
-            width: 90%;
-            max-width: 420px;
-            background: rgba(0, 0, 0, 0.85);
-            padding: 20px;
-            border-radius: 20px;
-            border: 2px solid #ffd700;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        .container { 
+            max-width: 500px; margin: 0 auto; border: 2px solid #d4af37; padding: 20px; 
+            border-radius: 15px; background: rgba(0, 0, 0, 0.85); 
         }
-        h2 {
-            margin-bottom: 15px;
-            font-size: 24px;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-        .box {
-            margin: 12px 0;
-            padding: 12px;
-            border: 1px solid #ffd700;
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.6);
-            transition: 0.3s;
-        }
-        .box:hover {
-            background: rgba(255, 215, 0, 0.1);
-        }
-        select, a {
-            color: #ffd700;
-            text-decoration: none;
-            font-weight: bold;
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-            background: transparent;
-            border: none;
-            text-align: center;
-            font-size: 15px;
-            outline: none;
-        }
-        select option {
-            background: #000;
-            color: #ffd700;
-        }
-        .btn-buy {
-            background: #ffd700 !important;
-            color: #000 !important;
-            border-radius: 12px;
-            padding: 12px;
-            font-size: 16px;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-        .social-links {
-            display: flex;
-            justify-content: space-around;
-        }
-        .social-links a {
-            padding: 5px;
-            font-size: 14px;
-        }
+        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #d4af37; color: #d4af37; text-decoration: none; border-radius: 8px; font-weight: bold; box-sizing: border-box; }
+        .btn-main { background: #d4af37; color: #000; }
+        select { background: #000; color: #d4af37; border: 1px solid #d4af37; padding: 5px; }
     </style>
 </head>
 <body>
-
-<div class="main-container">
-    <h2 id="title">ARK Finance</h2>
-    
-    <!-- کادر زبان (۲۰ زبان رسمی) -->
-    <div class="box">
-        <select id="langSelect" onchange="changeLanguage()">
-            <option value="fa" selected>فارسی (Persian)</option>
-            <option value="en">English</option>
-            <option value="ar">العربية (Arabic)</option>
-            <option value="zh">中文 (Chinese)</option>
-            <option value="es">Español (Spanish)</option>
-            <option value="hi">हिन्दी (Hindi)</option>
-            <option value="fr">Français (French)</option>
-            <option value="ru">Русский (Russian)</option>
-            <option value="de">Deutsch (German)</option>
-            <option value="ja">日本語 (Japanese)</option>
-            <option value="tr">Türkçe (Turkish)</option>
-            <option value="it">Italiano (Italian)</option>
-            <option value="ko">한국어 (Korean)</option>
-            <option value="pt">Português (Portuguese)</option>
-            <option value="nl">Nederlands (Dutch)</option>
-            <option value="pl">Polski (Polish)</option>
-            <option value="vi">Tiếng Việt (Vietnamese)</option>
-            <option value="id">Bahasa Indonesia</option>
-            <option value="ur">اردو (Urdu)</option>
-            <option value="bn">বাংলা (Bengali)</option>
-        </select>
+<div class="container">
+    <select id="langSelector" onchange="updateContent()">
+        <option value="en">English</option><option value="fa">فارسی</option><option value="ar">العربية</option>
+        <option value="tr">Türkçe</option><option value="ru">Русский</option><option value="zh">中文</option>
+        <option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option>
+        <option value="ja">日本語</option><option value="ko">한국어</option><option value="it">Italiano</option>
+        <option value="pt">Português</option><option value="hi">हिन्दी</option><option value="nl">Nederlands</option>
+        <option value="vi">Tiếng Việt</option><option value="th">ไทย</option><option value="id">Indonesian</option>
+        <option value="uk">Українська</option><option value="el">Ελληνικά</option>
+    </select>
+    <h1 id="title">ARK Token Finance</h1>
+    <div style="background: #1a1a1a; padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px solid #d4af37;">
+        <p id="price-label" style="margin:0;">Presale Price:</p>
+        <h2 style="margin:5px 0;">1 ARK = 0.001 USDT</h2>
     </div>
-
-    <!-- کادر تاریخ -->
-    <div class="box" id="dateBox">
-        تاریخ: <span id="date"></span>
-    </div>
-
-    <!-- کادر شبکه‌های اجتماعی -->
-    <div class="box social-links">
-        <a href="#" id="tgText">تلگرام</a>
-        <a href="#" id="instaText">اینستاگرام</a>
-    </div>
-
-    <!-- کادر خرید -->
-    <a href="#" class="box btn-buy" id="buyText">خرید مستقیم توکن</a>
+    <a href="YOUR_TELEGRAM_LINK" class="btn" id="btn-tg">Telegram</a>
+    <a href="YOUR_INSTAGRAM_LINK" class="btn" id="btn-ig">Instagram</a>
+    <a href="YOUR_BUY_LINK" class="btn btn-main" id="btn-buy">Buy Token Now</a>
+    <p style="font-size: 0.8rem; margin-top:20px;" id="date-text"></p>
 </div>
-
 <script>
-    // تنظیم تاریخ میلادی
-    document.getElementById('date').innerText = new Date().toLocaleDateString('en-GB');
-
-    // دیکشنری ترجمه‌ها برای ۲۰ زبان
     const translations = {
-        fa: { title: "ARK Finance", dateLabel: "تاریخ: ", tg: "تلگرام", insta: "اینستاگرام", buy: "خرید مستقیم توکن", dir: "rtl" },
-        en: { title: "ARK Finance", dateLabel: "Date: ", tg: "Telegram", insta: "Instagram", buy: "Buy Token Directly", dir: "ltr" },
-        ar: { title: "ARK Finance", dateLabel: "التاريخ: ", tg: "تيليجرام", insta: "انستغرام", buy: "شراء الرمز مباشرة", dir: "rtl" },
-        zh: { title: "ARK 金融", dateLabel: "日期: ", tg: "电报", insta: "Instagram", buy: "直接购买代币", dir: "ltr" },
-        es: { title: "ARK Finance", dateLabel: "Fecha: ", tg: "Telegram", insta: "Instagram", buy: "Comprar Token", dir: "ltr" },
-        hi: { title: "ARK फाइनेंस", dateLabel: "दिनांक: ", tg: "टेलीग्राम", insta: "इंस्टाग्राम", buy: "टोकन खरीदें", dir: "ltr" },
-        fr: { title: "ARK Finance", dateLabel: "Date : ", tg: "Télégramme", insta: "Instagram", buy: "Acheter des Tokens", dir: "ltr" },
-        ru: { title: "ARK Финансы", dateLabel: "Дата: ", tg: "Телеграм", insta: "Инстаграм", buy: "Купить токен", dir: "ltr" },
-        de: { title: "ARK Finanzen", dateLabel: "Datum: ", tg: "Telegram", insta: "Instagram", buy: "Token kaufen", dir: "ltr" },
-        ja: { title: "ARK ファイナンス", dateLabel: "日付: ", tg: "テレグラム", insta: "インスタグラム", buy: "トークンを購入", dir: "ltr" },
-        tr: { title: "ARK Finans", dateLabel: "Tarih: ", tg: "Telegram", insta: "Instagram", buy: "Token Satın Al", dir: "ltr" },
-        it: { title: "ARK Finanza", dateLabel: "Data: ", tg: "Telegram", insta: "Instagram", buy: "Acquista Token", dir: "ltr" },
-        ko: { title: "ARK 파이낸스", dateLabel: "날짜: ", tg: "텔레그램", insta: "인스타그램", buy: "토큰 구매", dir: "ltr" },
-        pt: { title: "ARK Finanças", dateLabel: "Data: ", tg: "Telegram", insta: "Instagram", buy: "Comprar Token", dir: "ltr" },
-        nl: { title: "ARK Financiën", dateLabel: "Datum: ", tg: "Telegram", insta: "Instagram", buy: "Token Kopen", dir: "ltr" },
-        pl: { title: "ARK Finanse", dateLabel: "Data: ", tg: "Telegram", insta: "Instagram", buy: "Kup Token", dir: "ltr" },
-        vi: { title: "ARK Tài chính", dateLabel: "Ngày: ", tg: "Telegram", insta: "Instagram", buy: "Mua Token", dir: "ltr" },
-        id: { title: "ARK Keuangan", dateLabel: "Tanggal: ", tg: "Telegram", insta: "Instagram", buy: "Beli Token", dir: "ltr" },
-        ur: { title: "ARK فنانس", dateLabel: "تاریخ: ", tg: "ٹیلیگرام", insta: "انسٹाग्राम", buy: "ٹوکن خریدیں", dir: "rtl" },
-        bn: { title: "ARK ফাইনান্স", dateLabel: "তারিখ: ", tg: "টেলিগ্রাম", insta: "ইনস্টাগ্রাম", buy: "টোকেন কিনুন", dir: "ltr" }
+        en: { title: "ARK Token Finance", price: "Presale Price:", tg: "Telegram", ig: "Instagram", buy: "Buy Token Now" },
+        fa: { title: "آرک توکن فایننس", price: "قیمت پیش‌فروش:", tg: "تلگرام", ig: "اینستاگرام", buy: "خرید توکن" },
+        ar: { title: "ARK Token Finance", price: "سعر البيع المسبق:", tg: "تيليجرام", ig: "إنستغرام", buy: "شراء الرمز" },
+        tr: { title: "ARK Token Finance", price: "Ön Satış Fiyatı:", tg: "Telegram", ig: "Instagram", buy: "Token Al" },
+        ru: { title: "ARK Token Finance", price: "Цена предпродажи:", tg: "Telegram", ig: "Instagram", buy: "Купить токен" },
+        zh: { title: "ARK Token Finance", price: "预售价格:", tg: "Telegram", ig: "Instagram", buy: "购买代币" },
+        es: { title: "ARK Token Finance", price: "Precio de Preventa:", tg: "Telegram", ig: "Instagram", buy: "Comprar Token" },
+        fr: { title: "ARK Token Finance", price: "Prix de prévente:", tg: "Telegram", ig: "Instagram", buy: "Acheter un jeton" },
+        de: { title: "ARK Token Finance", price: "Vorverkaufspreis:", tg: "Telegram", ig: "Instagram", buy: "Token kaufen" },
+        ja: { title: "ARK Token Finance", price: "プレセール価格:", tg: "Telegram", ig: "Instagram", buy: "トークンを購入" },
+        ko: { title: "ARK Token Finance", price: "프리세일 가격:", tg: "텔레그램", ig: "인스타그램", buy: "토큰 구매" },
+        it: { title: "ARK Token Finance", price: "Prezzo di prevendita:", tg: "Telegram", ig: "Instagram", buy: "Acquista Token" },
+        pt: { title: "ARK Token Finance", price: "Preço de pré-venda:", tg: "Telegram", ig: "Instagram", buy: "Comprar Token" },
+        hi: { title: "ARK Token Finance", price: "प्रीसेल मूल्य:", tg: "टेलीग्राम", ig: "इंस्टाग्राम", buy: "टोकन खरीदें" },
+        nl: { title: "ARK Token Finance", price: "Voorverkoopprijs:", tg: "Telegram", ig: "Instagram", buy: "Token kopen" },
+        vi: { title: "ARK Token Finance", price: "Giá bán trước:", tg: "Telegram", ig: "Instagram", buy: "Mua Token" },
+        th: { title: "ARK Token Finance", price: "ราคาพรีเซล:", tg: "Telegram", ig: "Instagram", buy: "ซื้อโทเค็น" },
+        id: { title: "ARK Token Finance", price: "Harga Presale:", tg: "Telegram", ig: "Instagram", buy: "Beli Token" },
+        uk: { title: "ARK Token Finance", price: "Ціна передпродажу:", tg: "Telegram", ig: "Instagram", buy: "Купити токен" },
+        el: { title: "ARK Token Finance", price: "Τιμή προπώλησης:", tg: "Telegram", ig: "Instagram", buy: "Αγορά Token" }
     };
-
-    function changeLanguage() {
-        const lang = document.getElementById('langSelect').value;
+    function updateContent() {
+        const lang = document.getElementById('langSelector').value;
         const t = translations[lang];
-        
-        document.documentElement.setAttribute('dir', t.dir);
         document.getElementById('title').innerText = t.title;
-        document.getElementById('dateBox').innerHTML = t.dateLabel + '<span id="date">' + new Date().toLocaleDateString('en-GB') + '</span>';
-        document.getElementById('tgText').innerText = t.tg;
-        document.getElementById('instaText').innerText = t.insta;
-        document.getElementById('buyText').innerText = t.buy;
+        document.getElementById('price-label').innerText = t.price;
+        document.getElementById('btn-tg').innerText = t.tg;
+        document.getElementById('btn-ig').innerText = t.ig;
+        document.getElementById('btn-buy').innerText = t.buy;
     }
+    document.getElementById('date-text').innerText = "Date: " + new Date().toLocaleDateString('en-GB');
 </script>
-
 </body>
 </html>
