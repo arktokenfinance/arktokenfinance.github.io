@@ -4,77 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ARK Token Finance</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
     <style>
-        body { 
-            background-image: url('lxM91ECNnGD2uqekhM2jQ4f-ahs-dC6WcPhuRdKF1Htq27YZcA.png');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            margin: 0; padding: 20px; text-align: center; font-family: Arial, sans-serif; color: #d4af37;
-        }
-        .container { 
-            max-width: 500px; margin: 0 auto; border: 2px solid #d4af37; padding: 20px; 
-            border-radius: 15px; background: rgba(0, 0, 0, 0.85); 
-        }
-        .btn { display: block; width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #d4af37; color: #d4af37; text-decoration: none; border-radius: 8px; font-weight: bold; box-sizing: border-box; }
-        .btn-main { background: #d4af37; color: #000; }
-        select { background: #000; color: #d4af37; border: 1px solid #d4af37; padding: 5px; }
+        body { background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; margin: 0; padding: 10px; }
+        .container { width: 100%; max-width: 400px; text-align: center; }
+        .main-logo { width: 100%; border-radius: 15px; margin-bottom: 20px; border: 1px solid #d4af37; }
+        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .btn { padding: 12px; border: 1px solid #d4af37; background: #000; color: #fff; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 14px; text-align: center; }
+        .full-width { width: 100%; padding: 15px; background: #d4af37; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: black; font-size: 16px; margin-top: 10px; }
+        select { background: #000; color: #d4af37; padding: 12px; width: 100%; border: 1px solid #d4af37; border-radius: 8px; }
     </style>
 </head>
 <body>
+
 <div class="container">
-    <select id="langSelector" onchange="updateContent()">
-        <option value="en">English</option><option value="fa">فارسی</option><option value="ar">العربية</option>
-        <option value="tr">Türkçe</option><option value="ru">Русский</option><option value="zh">中文</option>
-        <option value="es">Español</option><option value="fr">Français</option><option value="de">Deutsch</option>
-        <option value="ja">日本語</option><option value="ko">한국어</option><option value="it">Italiano</option>
-        <option value="pt">Português</option><option value="hi">हिन्दी</option><option value="nl">Nederlands</option>
-        <option value="vi">Tiếng Việt</option><option value="th">ไทย</option><option value="id">Indonesian</option>
-        <option value="uk">Українська</option><option value="el">Ελληνικά</option>
+    <!-- استفاده از نام فایل دقیق شما -->
+    <img src="lxM91ECNnGD2uqekhM2jQ4f-ahs-dC6WcPhuRdKF1Htq27YZcA.png" alt="ARK Logo" class="main-logo">
+
+    <!-- انتخاب زبان -->
+    <select id="langSwitcher" onchange="changeLanguage()">
+        <option value="en">English</option> <option value="fa">فارسی</option> <option value="ar">العربية</option>
+        <option value="zh">中文</option> <option value="es">Español</option> <option value="fr">Français</option>
+        <option value="de">Deutsch</option> <option value="ru">Русский</option> <option value="pt">Português</option>
+        <option value="hi">हिन्दी</option> <option value="ja">日本語</option> <option value="tr">Türkçe</option>
+        <option value="it">Italiano</option> <option value="ko">한국어</option> <option value="nl">Nederlands</option>
+        <option value="el">Ελληνικά</option> <option value="vi">Tiếng Việt</option> <option value="id">Bahasa</option>
+        <option value="th">ไทย</option> <option value="ur">اردو</option>
     </select>
-    <h1 id="title">ARK Token Finance</h1>
-    <div style="background: #1a1a1a; padding: 15px; border-radius: 10px; margin: 20px 0; border: 1px solid #d4af37;">
-        <p id="price-label" style="margin:0;">Presale Price:</p>
-        <h2 style="margin:5px 0;">1 ARK = 0.001 USDT</h2>
+
+    <!-- دکمه‌ها -->
+    <div class="grid-menu" style="margin-top:10px;">
+        <button class="btn" id="t-support" onclick="openSupport()">Support</button>
+        <a href="https://t.me/YOUR_TELEGRAM" class="btn" id="t-telegram">Telegram</a>
+        <a href="https://instagram.com/YOUR_INSTA" class="btn" id="t-insta">Instagram</a>
+        <div class="btn" id="date"></div>
     </div>
-    <a href="YOUR_TELEGRAM_LINK" class="btn" id="btn-tg">Telegram</a>
-    <a href="YOUR_INSTAGRAM_LINK" class="btn" id="btn-ig">Instagram</a>
-    <a href="YOUR_BUY_LINK" class="btn btn-main" id="btn-buy">Buy Token Now</a>
-    <p style="font-size: 0.8rem; margin-top:20px;" id="date-text"></p>
+
+    <div class="btn" id="t-price" style="border-color:#d4af37; color:#d4af37;">1 ARK = GAPGPTMASKTOKENvibecgmh2kpX0X USDT</div>
+    <button class="full-width" id="t-buy" onclick="buyToken()">Buy Token Now</button>
+    <div id="status" style="margin-top:15px; font-size:14px; color:#d4af37;"></div>
 </div>
+
 <script>
-    const translations = {
-        en: { title: "ARK Token Finance", price: "Presale Price:", tg: "Telegram", ig: "Instagram", buy: "Buy Token Now" },
-        fa: { title: "آرک توکن فایننس", price: "قیمت پیش‌فروش:", tg: "تلگرام", ig: "اینستاگرام", buy: "خرید توکن" },
-        ar: { title: "ARK Token Finance", price: "سعر البيع المسبق:", tg: "تيليجرام", ig: "إنستغرام", buy: "شراء الرمز" },
-        tr: { title: "ARK Token Finance", price: "Ön Satış Fiyatı:", tg: "Telegram", ig: "Instagram", buy: "Token Al" },
-        ru: { title: "ARK Token Finance", price: "Цена предпродажи:", tg: "Telegram", ig: "Instagram", buy: "Купить токен" },
-        zh: { title: "ARK Token Finance", price: "预售价格:", tg: "Telegram", ig: "Instagram", buy: "购买代币" },
-        es: { title: "ARK Token Finance", price: "Precio de Preventa:", tg: "Telegram", ig: "Instagram", buy: "Comprar Token" },
-        fr: { title: "ARK Token Finance", price: "Prix de prévente:", tg: "Telegram", ig: "Instagram", buy: "Acheter un jeton" },
-        de: { title: "ARK Token Finance", price: "Vorverkaufspreis:", tg: "Telegram", ig: "Instagram", buy: "Token kaufen" },
-        ja: { title: "ARK Token Finance", price: "プレセール価格:", tg: "Telegram", ig: "Instagram", buy: "トークンを購入" },
-        ko: { title: "ARK Token Finance", price: "프리세일 가격:", tg: "텔레그램", ig: "인스타그램", buy: "토큰 구매" },
-        it: { title: "ARK Token Finance", price: "Prezzo di prevendita:", tg: "Telegram", ig: "Instagram", buy: "Acquista Token" },
-        pt: { title: "ARK Token Finance", price: "Preço de pré-venda:", tg: "Telegram", ig: "Instagram", buy: "Comprar Token" },
-        hi: { title: "ARK Token Finance", price: "प्रीसेल मूल्य:", tg: "टेलीग्राम", ig: "इंस्टाग्राम", buy: "टोकन खरीदें" },
-        nl: { title: "ARK Token Finance", price: "Voorverkoopprijs:", tg: "Telegram", ig: "Instagram", buy: "Token kopen" },
-        vi: { title: "ARK Token Finance", price: "Giá bán trước:", tg: "Telegram", ig: "Instagram", buy: "Mua Token" },
-        th: { title: "ARK Token Finance", price: "ราคาพรีเซล:", tg: "Telegram", ig: "Instagram", buy: "ซื้อโทเค็น" },
-        id: { title: "ARK Token Finance", price: "Harga Presale:", tg: "Telegram", ig: "Instagram", buy: "Beli Token" },
-        uk: { title: "ARK Token Finance", price: "Ціна передпродажу:", tg: "Telegram", ig: "Instagram", buy: "Купити токен" },
-        el: { title: "ARK Token Finance", price: "Τιμή προπώλησης:", tg: "Telegram", ig: "Instagram", buy: "Αγορά Token" }
+    const t = {
+        'en': { sup: 'Support', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX1X USDT', buy: 'Buy Token Now' },
+        'fa': { sup: 'پشتیبانی', tg: 'تلگرام', ins: 'اینستاگرام', pr: '۱ توکن = GAPGPTMASKTOKENvibecgmh2kpX2X تتر', buy: 'خرید فوری' },
+        'ar': { sup: 'الدعم', tg: 'تيليجرام', ins: 'انستغرام', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX3X USDT', buy: 'شراء الآن' },
+        'zh': { sup: '支持', tg: '电报', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX4X USDT', buy: '立即购买' },
+        'es': { sup: 'Soporte', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX5X USDT', buy: 'Comprar' },
+        'fr': { sup: 'Support', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX6X USDT', buy: 'Acheter' },
+        'de': { sup: 'Hilfe', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX7X USDT', buy: 'Kaufen' },
+        'ru': { sup: 'Поддержка', tg: 'Телеграм', ins: 'Инстаграм', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX8X USDT', buy: 'Купить' },
+        'pt': { sup: 'Suporte', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX9X USDT', buy: 'Comprar' },
+        'hi': { sup: 'सहायता', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX10X USDT', buy: 'खरीदें' },
+        'ja': { sup: 'サポート', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX11X USDT', buy: '購入' },
+        'tr': { sup: 'Destek', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX12X USDT', buy: 'Hemen Al' },
+        'it': { sup: 'Supporto', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX13X USDT', buy: 'Acquista' },
+        'ko': { sup: '지원', tg: '텔레그램', ins: '인스타그램', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX14X USDT', buy: '구매' },
+        'nl': { sup: 'Ondersteuning', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX15X USDT', buy: 'Kopen' },
+        'el': { sup: 'Υποστήριξη', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX16X USDT', buy: 'Αγορά' },
+        'vi': { sup: 'Hỗ trợ', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX17X USDT', buy: 'Mua' },
+        'id': { sup: 'Dukungan', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX18X USDT', buy: 'Beli' },
+        'th': { sup: 'ซัพพอร์ต', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX19X USDT', buy: 'ซื้อ' },
+        'ur': { sup: 'مدد', tg: 'ٹیلیگرام', ins: 'انسٹاگرام', pr: '1 ARK = GAPGPTMASKTOKENvibecgmh2kpX20X USDT', buy: 'خریدیں' }
     };
-    function updateContent() {
-        const lang = document.getElementById('langSelector').value;
-        const t = translations[lang];
-        document.getElementById('title').innerText = t.title;
-        document.getElementById('price-label').innerText = t.price;
-        document.getElementById('btn-tg').innerText = t.tg;
-        document.getElementById('btn-ig').innerText = t.ig;
-        document.getElementById('btn-buy').innerText = t.buy;
+
+    function changeLanguage() {
+        const lang = document.getElementById('langSwitcher').value;
+        const txt = t[lang] || t['en'];
+        document.getElementById('t-support').innerText = txt.sup;
+        document.getElementById('t-telegram').innerText = txt.tg;
+        document.getElementById('t-insta').innerText = txt.ins;
+        document.getElementById('t-price').innerText = txt.pr;
+        document.getElementById('t-buy').innerText = txt.buy;
     }
-    document.getElementById('date-text').innerText = "Date: " + new Date().toLocaleDateString('en-GB');
+
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('date').innerText = now.toLocaleDateString('en-US');
+    }
+    updateClock();
+
+    async function buyToken() {
+        if (!window.ethereum) return alert("Please install MetaMask or TrustWallet");
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract("0xe9069dc6a0dd6d3e375a1eef3520ada61d4ef5cf", [{"inputs":[{"internalType":"uint256","name":"usdtAmount","type":"uint256"}],"name":"buy","outputs":[],"stateMutability":"nonpayable","type":"function"}], signer);
+        
+        try {
+            document.getElementById('status').innerText = "Processing...";
+            const tx = await contract.buy(ethers.utils.parseUnits("1", 6)); 
+            await tx.wait();
+            document.getElementById('status').innerText = "Success!";
+        } catch (e) { document.getElementById('status').innerText = "Error or User Rejected"; }
+    }
+
+    function openSupport() { alert("کد Tawk.to را در اینجا جایگزین کنید"); }
 </script>
+
 </body>
 </html>
