@@ -8,12 +8,8 @@
     <style>
         body { background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 10px; }
         .wrapper { width: 100%; max-width: 400px; }
-        
-        /* کادر اصلی که لوگو و همه چیز داخل آن است */
         .content-box { border: 2px solid #d4af37; padding: 15px; border-radius: 15px; background: #0a0a0a; display: flex; flex-direction: column; gap: 15px; }
-        
         .main-logo { width: 100%; border-radius: 10px; display: block; }
-        
         .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .btn { padding: 12px; border: 1px solid #d4af37; background: #000; color: #fff; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 14px; text-align: center; }
         .full-width { width: 100%; padding: 15px; background: #d4af37; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: black; font-size: 16px; }
@@ -23,9 +19,9 @@
 <body>
 
 <div class="wrapper">
-    <!-- کادر اصلی که همه چیز داخل آن است -->
     <div class="content-box">
-        <img src="lxM91ECNnGD2uqekhM2jQ4f-ahs-dC6WcPhuRdKF1Htq27YZcA.png" alt="ARK Logo" class="main-logo">
+        <!-- تصویر جدید شما -->
+        <img src="IMG_۲۰۲۶۰۹۲۰_۲۰۳۳۴۳.jpg" alt="ARK Logo" class="main-logo">
         
         <select id="langSwitcher" onchange="changeLanguage()">
             <option value="en">English</option> <option value="fa">فارسی</option> <option value="ar">العربية</option>
@@ -73,38 +69,10 @@
         'th': { sup: 'ซัพพอร์ต', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'ซื้อ' },
         'ur': { sup: 'مدد', tg: 'ٹیلیگرام', ins: 'انسٹاگرام', pr: '1 ARK = 0.001 USDT', buy: 'خریدیں' }
     };
-
-    function changeLanguage() {
-        const lang = document.getElementById('langSwitcher').value;
-        const txt = t[lang] || t['en'];
-        document.getElementById('t-support').innerText = txt.sup;
-        document.getElementById('t-telegram').innerText = txt.tg;
-        document.getElementById('t-insta').innerText = txt.ins;
-        document.getElementById('t-price').innerText = txt.pr;
-        document.getElementById('t-buy').innerText = txt.buy;
-    }
-
-    function updateClock() {
-        const now = new Date();
-        document.getElementById('date').innerText = now.toLocaleDateString('en-US');
-    }
+    function changeLanguage() { const lang = document.getElementById('langSwitcher').value; const txt = t[lang] || t['en']; document.getElementById('t-support').innerText = txt.sup; document.getElementById('t-telegram').innerText = txt.tg; document.getElementById('t-insta').innerText = txt.ins; document.getElementById('t-price').innerText = txt.pr; document.getElementById('t-buy').innerText = txt.buy; }
+    function updateClock() { document.getElementById('date').innerText = new Date().toLocaleDateString('en-US'); }
     updateClock();
-
-    async function buyToken() {
-        if (!window.ethereum) return alert("Please install MetaMask or TrustWallet");
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        await provider.send("eth_requestAccounts", []);
-        const signer = provider.getSigner();
-        const contract = new ethers.Contract("0xe9069dc6a0dd6d3e375a1eef3520ada61d4ef5cf", [{"inputs":[{"internalType":"uint256","name":"usdtAmount","type":"uint256"}],"name":"buy","outputs":[],"stateMutability":"nonpayable","type":"function"}], signer);
-        
-        try {
-            document.getElementById('status').innerText = "Processing...";
-            const tx = await contract.buy(ethers.utils.parseUnits("1", 6)); 
-            await tx.wait();
-            document.getElementById('status').innerText = "Success!";
-        } catch (e) { document.getElementById('status').innerText = "Error or User Rejected"; }
-    }
-
+    async function buyToken() { if (!window.ethereum) return alert("Please install MetaMask or TrustWallet"); const provider = new ethers.providers.Web3Provider(window.ethereum); await provider.send("eth_requestAccounts", []); const signer = provider.getSigner(); const contract = new ethers.Contract("0xe9069dc6a0dd6d3e375a1eef3520ada61d4ef5cf", [{"inputs":[{"internalType":"uint256","name":"usdtAmount","type":"uint256"}],"name":"buy","outputs":[],"stateMutability":"nonpayable","type":"function"}], signer); try { document.getElementById('status').innerText = "Processing..."; const tx = await contract.buy(ethers.utils.parseUnits("1", 6)); await tx.wait(); document.getElementById('status').innerText = "Success!"; } catch (e) { document.getElementById('status').innerText = "Error or User Rejected"; } }
     function openSupport() { alert("کد Tawk.to را در اینجا جایگزین کنید"); }
 </script>
 
