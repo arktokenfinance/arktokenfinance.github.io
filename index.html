@@ -1,80 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARK Token Finance</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js"></script>
-    <style>
-        body { background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 10px; }
-        .wrapper { width: 100%; max-width: 400px; }
-        .content-box { border: 2px solid #d4af37; padding: 15px; border-radius: 15px; background: #0a0a0a; display: flex; flex-direction: column; gap: 15px; }
-        .main-logo { width: 100%; border-radius: 10px; display: block; }
-        .grid-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .btn { padding: 12px; border: 1px solid #d4af37; background: #000; color: #fff; border-radius: 8px; cursor: pointer; text-decoration: none; font-size: 14px; text-align: center; }
-        .full-width { width: 100%; padding: 15px; background: #d4af37; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; color: black; font-size: 16px; }
-        select { background: #000; color: #d4af37; padding: 12px; width: 100%; border: 1px solid #d4af37; border-radius: 8px; font-size: 14px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARK Token Finance</title>
+<style>
+  body { font-family: Tahoma, sans-serif; background:#111; margin:0; padding:15px; color:#fff; }
+  .frame { max-width:600px; margin:auto; border:3px solid #d4af37; border-radius:25px; padding:18px; background:#0d0d0d; }
+  img { width:100%; border-radius:15px; display:block; }
+  select { width:100%; padding:12px; margin:15px 0; background:#0d0d0d; color:#d4af37; border:2px solid #d4af37; border-radius:12px; font-size:15px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .btn { display:block; text-align:center; padding:12px; background:#0d0d0d; color:#fff; border:2px solid #d4af37; border-radius:12px; text-decoration:none; font-size:14px; }
+  .price { margin-top:10px; text-align:center; padding:12px; border:2px solid #d4af37; border-radius:12px; color:#ffd700; font-weight:bold; font-size:14px; }
+  .buy { margin-top:10px; display:block; text-align:center; padding:15px; background:#e6c14e; color:#000; font-weight:bold; font-size:16px; border-radius:12px; text-decoration:none; }
+  h2 { color:#ffd700; font-size:16px; text-align:center; margin:12px 0 4px; }
+  p.intro { font-size:12px; text-align:center; color:#ddd; margin:4px 0 10px; }
+  ul { font-size:11.5px; line-height:1.7; color:#ddd; padding-right:18px; padding-left:18px; margin:8px 0; }
+  .closing { text-align:center; font-size:11.5px; color:#ffd700; }
+</style>
 </head>
 <body>
+<div class="frame">
+  <img src="IMG_۲۰۲۶۰۹۲۱_۰۱۴۳۵۶.jpg" alt="ARK Token">
+  <select id="langSelect" onchange="setLang(this.value)">
+    <option value="fa">فارسی</option>
+    <option value="en">English</option>
+    <option value="ar">العربية</option>
+    <option value="zh">中文</option>
+    <option value="es">Español</option>
+    <option value="fr">Français</option>
+    <option value="de">Deutsch</option>
+    <option value="ru">Русский</option>
+    <option value="tr">Türkçe</option>
+    <option value="hi">हिन्दी</option>
+    <option value="pt">Português</option>
+    <option value="ja">日本語</option>
+    <option value="ko">한국어</option>
+    <option value="it">Italiano</option>
+    <option value="id">Indonesia</option>
+    <option value="ur">اردو</option>
+    <option value="bn">বাংলা</option>
+    <option value="uk">Українська</option>
+    <option value="vi">Tiếng Việt</option>
+    <option value="th">ไทย</option>
+  </select>
 
-<div class="wrapper">
-    <div class="content-box">
-        <!-- تصویر جدید شما -->
-        <img src="IMG_۲۰۲۶۰۹۲۰_۲۰۳۳۴۳.jpg" alt="ARK Logo" class="main-logo">
-        
-        <select id="langSwitcher" onchange="changeLanguage()">
-            <option value="en">English</option> <option value="fa">فارسی</option> <option value="ar">العربية</option>
-            <option value="zh">中文</option> <option value="es">Español</option> <option value="fr">Français</option>
-            <option value="de">Deutsch</option> <option value="ru">Русский</option> <option value="pt">Português</option>
-            <option value="hi">हिन्दी</option> <option value="ja">日本語</option> <option value="tr">Türkçe</option>
-            <option value="it">Italiano</option> <option value="ko">한국어</option> <option value="nl">Nederlands</option>
-            <option value="el">Ελληνικά</option> <option value="vi">Tiếng Việt</option> <option value="id">Bahasa</option>
-            <option value="th">ไทย</option> <option value="ur">اردو</option>
-        </select>
+  <h2 id="t_title"></h2>
+  <p class="intro" id="t_intro"></p>
+  <ul id="t_features"></ul>
+  <p class="closing" id="t_closing"></p>
 
-        <div class="grid-menu">
-            <button class="btn" id="t-support" onclick="openSupport()">Support</button>
-            <a href="https://t.me/YOUR_TELEGRAM" class="btn" id="t-telegram">Telegram</a>
-            <a href="https://instagram.com/YOUR_INSTA" class="btn" id="t-insta">Instagram</a>
-            <div class="btn" id="date"></div>
-        </div>
-
-        <div class="btn" id="t-price" style="border-color:#d4af37; color:#d4af37; font-weight: bold;">1 ARK = 0.001 USDT</div>
-        <button class="full-width" id="t-buy" onclick="buyToken()">Buy Token Now</button>
-        <div id="status" style="font-size:14px; color:#d4af37; text-align:center;"></div>
-    </div>
+  <div class="grid">
+    <a class="btn" href="https://t.me/ARKTokenProject" id="t_telegram"></a>
+    <a class="btn" href="https://instagram.com/ark_token_project" id="t_instagram"></a>
+    <a class="btn" href="https://polygonscan.com/token/0xe9069dc6a0dd6d3e375a1eef3520ada61d4ef5cf" id="t_support"></a>
+    <div class="btn">9/20/2026</div>
+  </div>
+  <div class="price">1 ARK = 0.001 USDT</div>
+  <a class="buy" href="https://polygonscan.com/token/0xe9069dc6a0dd6d3e375a1eef3520ada61d4ef5cf" id="t_buy"></a>
 </div>
 
 <script>
-    const t = {
-        'en': { sup: 'Support', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Buy Token Now' },
-        'fa': { sup: 'پشتیبانی', tg: 'تلگرام', ins: 'اینستاگرام', pr: '۱ توکن = ۰.۰۰۱ تتر', buy: 'خرید فوری' },
-        'ar': { sup: 'الدعم', tg: 'تيليجرام', ins: 'انستغرام', pr: '1 ARK = 0.001 USDT', buy: 'شراء الآن' },
-        'zh': { sup: '支持', tg: '电报', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: '立即购买' },
-        'es': { sup: 'Soporte', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Comprar' },
-        'fr': { sup: 'Support', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Acheter' },
-        'de': { sup: 'Hilfe', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Kaufen' },
-        'ru': { sup: 'Поддержка', tg: 'Телеграм', ins: 'Инстаграм', pr: '1 ARK = 0.001 USDT', buy: 'Купить' },
-        'pt': { sup: 'Suporte', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Comprar' },
-        'hi': { sup: 'सहायता', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'खरीदें' },
-        'ja': { sup: 'サポート', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: '購入' },
-        'tr': { sup: 'Destek', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Hemen Al' },
-        'it': { sup: 'Supporto', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Acquista' },
-        'ko': { sup: '지원', tg: '텔레그램', ins: '인스타그램', pr: '1 ARK = 0.001 USDT', buy: '구매' },
-        'nl': { sup: 'Ondersteuning', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Kopen' },
-        'el': { sup: 'Υποστήριξη', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Αγορά' },
-        'vi': { sup: 'Hỗ trợ', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Mua' },
-        'id': { sup: 'Dukungan', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'Beli' },
-        'th': { sup: 'ซัพพอร์ต', tg: 'Telegram', ins: 'Instagram', pr: '1 ARK = 0.001 USDT', buy: 'ซื้อ' },
-        'ur': { sup: 'مدد', tg: 'ٹیلیگرام', ins: 'انسٹاگرام', pr: '1 ARK = 0.001 USDT', buy: 'خریدیں' }
-    };
-    function changeLanguage() { const lang = document.getElementById('langSwitcher').value; const txt = t[lang] || t['en']; document.getElementById('t-support').innerText = txt.sup; document.getElementById('t-telegram').innerText = txt.tg; document.getElementById('t-insta').innerText = txt.ins; document.getElementById('t-price').innerText = txt.pr; document.getElementById('t-buy').innerText = txt.buy; }
-    function updateClock() { document.getElementById('date').innerText = new Date().toLocaleDateString('en-US'); }
-    updateClock();
-    async function buyToken() { if (!window.ethereum) return alert("Please install MetaMask or TrustWallet"); const provider = new ethers.providers.Web3Provider(window.ethereum); await provider.send("eth_requestAccounts", []); const signer = provider.getSigner(); const contract = new ethers.Contract("0xe9069dc6a0dd6d3e375a1eef3520ada61d4ef5cf", [{"inputs":[{"internalType":"uint256","name":"usdtAmount","type":"uint256"}],"name":"buy","outputs":[],"stateMutability":"nonpayable","type":"function"}], signer); try { document.getElementById('status').innerText = "Processing..."; const tx = await contract.buy(ethers.utils.parseUnits("1", 6)); await tx.wait(); document.getElementById('status').innerText = "Success!"; } catch (e) { document.getElementById('status').innerText = "Error or User Rejected"; } }
-    function openSupport() { alert("کد Tawk.to را در اینجا جایگزین کنید"); }
+const F = {
+ fa:["عرضه ۱ میلیارد توکن ARK با قیمت خیلی پایین جهت رشد قیمت و امنیت سرمایه‌گذاری","اختصاص ۸۰۰,۰۰۰ تتر جهت پشتوانه پروژه و امنیت سرمایه‌گذاری","توکن‌سوزی تا سقف ۹۰۰ میلیون توکن به‌صورت خودکار از محل کارمزدها جهت افزایش تدریجی قیمت","کارمزد بسیار پایین معادل ۰.۱ درصد","معافیت پرداخت کارمزد برای شرکت‌های خدماتی و فروشگاه‌ها","لیست شدن تدریجی در تمامی صرافی‌های متمرکز و غیرمتمرکز برای دسترسی همه مردم جهان","ارز اختصاصی قابل پذیرش در فروشگاه‌های زیرمجموعه","پیش‌فروش با قیمت ۰.۰۰۱ و شروع معاملات با قیمت ۰.۰۰۲ و کسب سود صددرصدی شما"],
+ en:["1 billion ARK tokens supplied at a very low price for price growth and investment security","$800,000 allocated as project backing and investment security","Auto-burn of up to 900M tokens from fees for gradual price increase","Ultra-low fee of only 0.1%","Zero-fee transactions for service companies and stores","Gradual listing on all major and minor centralized and decentralized exchanges","Exclusive currency accepted in affiliated stores","Presale at 0.001, trading starts at 0.002 — earn 100% profit"],
+ ar:["إصدار مليار توكن ARK بسعر منخفض جداً لنمو السعر وأمان الاستثمار","تخصيص 800,000 تتر كدعم للمشروع وأمان الاستثمار","حرق تلقائي حتى 900 مليون توكن من الرسوم لزيادة تدريجية في السعر","رسوم منخفضة جداً تعادل 0.1%","إعفاء من الرسوم لشركات الخدمات والمتاجر","الإدراج التدريجي في جميع الصرافيات المركزية واللامركزية","عملة حصرية مقبولة في المتاجر التابعة","بيع مسبق بسعر 0.001 ويبدأ التداول بسعر 0.002 وربح 100%"],
+ zh:["以极低价格发行10亿枚ARK代币，促进价格上涨与投资安全","划拨80万USDT作为项目支撑与投资保障","从手续费中自动销毁最多9亿枚代币，逐步提升价格","超低手续费，仅0.1%","服务公司与商店免手续费","逐步上线各大中心化与去中心化交易所","专属货币可在旗下商店使用","以0.001预售，0.002上市交易，获利100%"],
+ es:["Emisión de 1.000 millones de tokens ARK a precio muy bajo para el crecimiento y la seguridad","800.000 USDT asignados como respaldo del proyecto y seguridad de la inversión","Quema automática de hasta 900M de tokens desde comisiones para subir el precio","Comisión ultrabaja de solo 0,1%","Sin comisiones para empresas de servicios y tiendas","Listado gradual en todos los exchanges centralizados y descentralizados","Moneda exclusiva aceptada en tiendas afiliadas","Preventa a 0.001, cotización a 0.002 — obtén 100% de beneficio"],
+ fr:["Émission d'1 milliard de tokens ARK à un prix très bas pour la croissance et la sécurité","800 000 USDT alloués comme soutien du projet et sécurité de l'investissement","Burn automatique jusqu'à 900M de tokens via les frais pour augmenter le prix","Frais ultra-bas de seulement 0,1%","Exonération de frais pour les entreprises de services et les magasins","Cotation progressive sur tous les exchanges centralisés et décentralisés","Monnaie exclusive acceptée dans les magasins affiliés","Prévente à 0,001, cotation à 0,002 — bénéfice de 100%"],
+ de:["1 Milliarde ARK-Token zu sehr niedrigem Preis für Wachstum und Anlagesicherheit","800.000 USDT als Projektrücklage und Anlagesicherheit","Automatisches Burn von bis zu 900M Token aus Gebühren zur Preissteigerung","Ultraniedrige Gebühr von nur 0,1%","Gebührenbefreiung für Dienstleistungsunternehmen und Geschäfte","Schrittweise Notierung auf allen zentralen und dezentralen Börsen","Exklusive Währung in angeschlossenen Geschäften akzeptiert","Vorverkauf 0,001, Notierung 0,002 — 100% Gewinn"],
+ ru:["Выпуск 1 миллиарда токенов ARK по очень низкой цене для роста и безопасности инвестиций","800 000 USDT выделены как поддержка проекта и безопасность инвестиций","Автосжигание до 900 млн токенов из комиссий для постепенного роста цены","Очень низкая комиссия — всего 0,1%","Освобождение от комиссий для сервисных компаний и магазинов","Постепенный листинг на всех централизованных и децентрализованных биржах","Собственная валюта принимается в магазинах сети","Предпродажа 0,001, листинг 0,002 — прибыль 100%"],
+ tr:["Çok düşük fiyatla 1 milyar ARK token arzı: fiyat artışı ve yatırım güvenliği","Projeye destek ve yatırım güvenliği için 800.000 USDT tahsisi","Fiyatı kademeli artırmak için ücretlerden otomatik 900M token yakma","Sadece %0,1 çok düşük komisyon","Hizmet şirketleri ve mağazalar için komisyon muafiyeti","Tüm merkezi ve merkeziyetsiz borsalarda kademeli listedilme","Bağlı mağazalarda kabul edilen özel para birimi","0,001 ön satış, 0,002 borsa listesi — %100 kâr"],
+ hi:["कीमत वृद्धि और निवेश सुरक्षा के लिए बहुत कम कीमत पर 1 अरब ARK टोकन की आपूर्ति","परियोजना समर्थन और निवेश सुरक्षा हेतु 800,000 USDT","कीमत धीरे-धीरे बढ़ाने के लिए शुल्क से 900M टोकन की स्वतः बर्निंग","केवल 0.1% अत्यंत कम शुल्क","सेवा कंपनियों और दुकानों के लिए शुल्क मुक्त","सभी केंद्रीकृत और विकेंद्रीकृत एक्सचेंजों पर क्रमिक लिस्टिंग","सहयोगी दुकानों में स्वीकार्य विशेष मुद्रा","0.001 प्रीसेल, 0.002 लिस्टिंग — 100% लाभ"],
+ pt:["Emissão de 1 bilhão de tokens ARK a preço muito baixo para crescimento e segurança","800.000 USDT alocados como suporte do projeto e segurança do investimento","Queima automática de até 900M de tokens das taxas para elevar o preço","Taxa ultrabaixa de apenas 0,1%","Isenção de taxas para empresas de serviços e lojas","Listagem gradual em todas as exchanges centralizadas e descentralizadas","Moeda exclusiva aceita nas lojas afiliadas","Pré-venda a 0,001, listagem a 0,002 — lucro de 100%"],
+ ja:["非常に低い価格での10億ARKトークン発行：価格上昇と投資安全性","80万USDTをプロジェクトの裏付けと投資安全性に充当","手数料から最大9億トークンを自動バーンし価格を段階的に上昇","わずか0.1%の超低手数料","サービス企業・店舗の手数料免除","すべての取引所への段階的な上場","傘下店舗で使える独自通貨","0.001でプレセール、0.002で上場 — 100%の利益"],
+ ko:["가격 상승과 투자 안전을 위한 매우 낮은 가격의 10억 ARK 토큰 발행","프로젝트 뒷받침과 투자 안전을 위한 80만 USDT","가격 점진 상승을 위한 수수료 기반 최대 9억 토큰 자동 소각","단 0.1%의 초저렴 수수료","서비스 회사 및 상점 수수료 면제","모든 중앙화·탈중앙화 거래소에 단계적 상장","제휴 상점에서 사용 가능한 전용 화폐","0.001 프리세일, 0.002 상장 — 100% 수익"],
+ it:["Emissione di 1 miliardo di token ARK a prezzo bassissimo per crescita e sicurezza","800.000 USDT destinati al sostegno del پروژه و sicurezza","Burn automatico fino a 900M di token dalle commissioni per alzare il prezzo","Commissione ultra-bassa dello 0,1%","Esenzione commissioni per aziende di servizi e negozi","Quotazione graduale su tutti gli exchange centralizzati e decentralizzati","Valuta esclusiva accettata nei negozi affiliati","Pre a 0,001, quotazione a 0,002 — profitto del 100%"],
+ id:["Penawaran 1 miliar token ARK dengan harga sangat rendah untuk kenaikan harga dan keamanan investasi","800.000 USDT dialokasikan sebagai penopang proyek dan keamanan investasi","Pembakaran otomatis hingga 900M token dari biaya untuk menaikkan harga secara bertahap","Biaya sangat rendah hanya 0,1%","Bebas biaya untuk perusahaan layanan dan toko","Pendaftaran bertahap di semua bursa terpusat dan terdesentralisasi","Mata uang eksklusif yang diterima di toko afiliasi","Pra-jual 0,001, listing 0,002 — keuntungan 100%"],
+ ur:["قیمت میں اضافے اور سرمایہ کاری کی حفاظت کے لیے بہت کم قیمت پر 1 ارب ARK ٹوکن کی فراہمی","پروجیکٹ کے سہارے اور سرمایہ کاری کی حفاظت کے لیے 800,000 USDT","قیمت آہستہ آہستہ بڑھانے کے لیے فیس سے 900 ملین ٹوکن کی خودکار برننگ","صرف 0.1% انتہائی کم فیس","سروس کمپنیوں اور دکانوں کے لیے فیس سے معافی","تمام مرکزی اور غیر مرکزی ایکسچینجز پر تدریجی لسٹنگ","ملحقہ دکانوں میں قابل قبول مخصوص کرنسی","0.001 پری سیل، 0.002 لسٹنگ — 100% منافع"],
+ bn:["মূল্য বৃদ্ধি ও বিনিয়োগ সুরক্ষার জন্য খুব কম দামে ১ বিলিয়ন ARK টোকেন সরবরাহ","প্রকল্প সমর্থন ও বিনিয়োগ সুরক্ষার জন্য ৮০০,০০০ USDT","মূল্য ক্রমশ বাড়াতে ফি থেকে ৯০০ মিলিয়ন টোকেন স্বয়ংক্রিয় বার্ন","মাত্র ০.১% অতি کم ফি","সেবা কোম্পানি ও দোকানের জন্য ফি মুক্ত","সব কেন্দ্রীয় ও বিকেন্দ্রীভূত এক্সচেঞ্জে ধাপে ধাপে লিস্টিং","অনুমোদিত দোকানে গ্রহণযোগ্য বিশেষ মুদ্রা","০.০০১ প্রি-সেল, ০.০০২ লিস্টিং — ১০০% লাভ"],
+ uk:["Емісія 1 мільярда токенів ARK за дуже низькою ціною для зростання та безпеки","800 000 USDT виділено як підтримку проєкту та безпеку інвестицій","Автоспалювання до 900 млн токенів з комісій для поступового зростання ціни","Дуже низька комісія — всього 0,1%","Звільнення від комісій для сервісних компаній та магазинів","Поступовий лістинг на всіх централізованих та децентралізованих біржах","Власна валюта приймається в магазинах мережі","Передпродаж 0,001, лістинг 0,002 — прибуток 100%"],
+ vi:["Phát hành 1 tỷ token ARK với giá rất thấp để tăng giá và an toàn đầu tư","Phân bổ 800.000 USDT làm quỹ hỗ trợ dự án và an toàn đầu tư","Đốt tự động tới 900M token từ phí để tăng giá dần dần","Phí siêu thấp chỉ 0,1%","Miễn phí cho công ty dịch vụ và cửa hàng","Niêm yết dần trên tất cả sàn tập trung và phi tập trung","Tiền tệ riêng được chấp nhận tại cửa hàng liên kết","Bán trước 0,001, niêm yết 0,002 — lợi nhuận 100%"],
+ th:["ออกโทเค็น ARK 1 พันล้านในราคาต่ำมากเพื่อการเติบโตและความปลอดภัยของการลงทุน","จัดสรร 800,000 USDT เป็นเงินสนับสนุนโครงการและความมั่นคง","เผาโทเค็นอัตโนมัติสูงสุด 900M จากค่าธรรมเนียมเพื่อเพิ่มราคาอย่างค่อยเป็นค่อยไป","ค่าธรรมเนียมต่ำมากเพียง 0.1%","ยกเว้นค่าธรรมเนียมสำหรับบริษัทบริการและร้านค้า","เข้าจดทะเบียนบนเซ็นทรัลไลซ์และดีเซ็นทรัลไลซ์ทุกแห่ง","สกุลเงินเฉพาะที่รับในร้านค้าในเครือ","พรีเซล 0.001 จดทะเบียน 0.002 — กำไร 100%"]
+};
+const T = {
+ fa:{dir:"rtl",title:"به جمع خانواده بزرگ ARK خوش آمدید",intro:"با عضویت در پروژه بزرگ ARK و بهره‌مندی از مزایای زیر گام بزرگی برای آینده خود و عزیزانتان بردارید:",closing:"آینده پیش روی شماست؛ فرصتی تکرارنشدنی",tg:"کانال تلگرام",ig:"اینستاگرام",sup:"پشتیبانی",buy:"همین حالا توکن بخرید"},
+ en:{dir:"ltr",title:"Welcome to the big ARK family",intro:"By joining the great ARK project and benefiting from the advantages below, take a big step for your future and your loved ones:",closing:"The future is ahead of you — an unrepeatable opportunity",tg:"Telegram Channel",ig:"Instagram",sup:"Support",buy:"Buy Token Now"},
+ ar:{dir:"rtl",title:"أهلاً بك في عائلة ARK الكبيرة",intro:"بانضمامك إلى مشروع ARK الكبير والاستفادة من المزايا التالية، خذ خطوة كبيرة لمستقبلك وأحبائك:",closing:"المستقبل أمامك — فرصة لا تتكرر",tg:"قناة تيليجرام",ig:"إنستغرام",sup:"الدعم",buy:"اشترِ التوكن الآن"},
+ zh:{dir:"ltr",title:"欢迎加入ARK大家庭",intro:"加入伟大的ARK项目，享受以下优势，为您和您所爱之人的未来迈出一大步：",closing:"未来就在您面前 — 不可重复的机会",tg:"Telegram 频道",ig:"Instagram",sup:"支持",buy:"立即购买代币"},
+ es:{dir:"ltr",title:"Bienvenido a la gran familia ARK",intro:"Al unirte al gran proyecto ARK y beneficiarte de las ventajas siguientes, da un gran paso para tu futuro y el de tus seres queridos:",closing:"El futuro está ante ti — una oportunidad irrepetible",tg:"Canal de Telegram",ig:"Instagram",sup:"Soporte",buy:"Comprar Token Ahora"},
+ fr:{dir:"ltr",title:"Bienvenue dans la grande famille ARK",intro:"En rejoignant le grand projet ARK et en profitant des avantages ci-dessous, faites un grand pas pour votre avenir et celui de vos proches :",closing:"L'avenir est devant vous — une opportunité unique",tg:"Canal Telegram",ig:"Instagram",sup:"Support",buy:"Acheter le Token"},
+ de:{dir:"ltr",title:"Willkommen in der großen ARK-Familie",intro:"Indem Sie dem großen ARK-Projekt beitreten und die folgenden Vorteile nutzen, machen Sie einen großen Schritt für Ihre Zukunft:",closing:"Die Zukunft liegt vor Ihnen — eine einmalige Chance",tg:"Telegram-Kanal",ig:"Instagram",sup:"Support",buy:"Token Jetzt Kaufen"},
+ ru:{dir:"ltr",title:"Добро пожаловать в большую семью ARK",intro:"Присоединяясь к большому проекту ARK и пользуясь преимуществами ниже, вы делаете большой шаг для своего будущего и будущих близких:",closing:"Будущее перед вами — неповторимая возможность",tg:"Канал Telegram",ig:"Instagram",sup:"Поддержка",buy:"Купить токен сейчас"},
+ tr:{dir:"ltr",title:"Büyük ARK ailesine hoş geldiniz",intro:"Büyük ARK projesine katılarak ve aşağıdaki avantajlardan yararlanarak kendiniz ve sevdikleriniz için büyük bir adım atın:",closing:"Gelecek önünüzde — tekrarlanmayan bir fırsat",tg:"Telegram Kanalı",ig:"Instagram",sup:"Destek",buy:"Şimdi Token Al"},
+ hi:{dir:"ltr",title:"बड़े ARK परिवार में आपका स्वागत है",intro:"महान ARK परियोजना से जुड़कर और नीचे दिए लाभों का उपयोग करके, अपने और अपने प्रियजनों के भविष्य के लिए एक बड़ा कदम उठाएं:",closing:"भविष्य आपके सामने है — एक अनोखा अवसर",tg:"Telegram चैनल",ig:"Instagram",sup:"सहायता",buy:"अभी टोकन खरीदें"},
+ pt:{dir:"ltr",title:"Bem-vindo à grande família ARK",intro:"Ao ingressar no grande projeto ARK e beneficiar-se das vantagens abaixo, dê um grande passo para o seu futuro e o de seus entes queridos:",closing:"O futuro está diante de você — uma oportunidade irrepetível",tg:"Canal do Telegram",ig:"Instagram",sup:"Suporte",buy:"Comprar Token Agora"},
+ ja:{dir:"ltr",title:"大きなARKファミリーへようこそ",intro:"偉大なARKプロジェクトに参加し、以下の特典を活用して、ご自身と大切な人の未来のために大きな一歩を踏み出しましょう：",closing:"未来はあなたの前に — 二度とないチャンス",tg:"Telegramチャンネル",ig:"Instagram",sup:"サポート",buy:"今すぐトークンを購入"},
+ ko:{dir:"ltr",title:"큰 ARK 가족에 오신 것을 환영합니다",intro:"위대한 ARK 프로젝트에 참여하고 아래의 혜택을 누려 자신과 사랑하는 사람의 미래를 위한 큰 걸음을 내딛으세요:",closing:"미래가 당신 앞에 있습니다 — 다시 오지 않을 기회",tg:"Telegram 채널",ig:"Instagram",sup:"지원",buy:"지금 토큰 구매"},
+ it:{dir:"ltr",title:"Benvenuto nella grande famiglia ARK",intro:"Unendoti al grande progetto ARK e godendo dei vantaggi seguenti, fai un grande passo per il tuo futuro e quello dei tuoi cari:",closing:"Il futuro è davanti a te — un'opportunità irripetibile",tg:"Canale Telegram",ig:"Instagram",sup:"Supporto",buy:"Acquista il Token Ora"},
+ id:{dir:"ltr",title:"Selamat datang di keluarga besar ARK",intro:"Dengan bergabung dalam proyek besar ARK dan menikmati keunggulan berikut, ambil langkah besar untuk masa depan Anda dan orang tercinta:",closing:"Masa depan ada di hadapan Anda — kesempatan yang tak terulang",tg:"Kanal Telegram",ig:"Instagram",sup:"Dukungan",buy:"Beli Token Sekarang"},
+ ur:{dir:"rtl",title:"بڑے ARK خاندان میں خوش آمدید",intro:"عظیم ARK پروجیکٹ میں شامل ہو کر اور نیچے دیے گئے فوائد سے فائدہ اٹھا کر اپنے اور اپنے عزیزوں کے مستقبل کے لیے ایک بڑا قدم اٹھائیں:",closing:"مستقبل آپ کے سامنے ہے — ایک ناقابل تکرار موقع",tg:"ٹیلیگرام چینل",ig:"انسٹاگرام",sup:"سپورٹ",buy:"ابھی ٹوکن خریدیں"},
+ bn:{dir:"ltr",title:"বড় ARK পরিবারে স্বাগতম",intro:"মহান ARK প্রকল্পে যোগ দিয়ে এবং নিচের সুবিধাগুলো উপভোগ করে নিজের ও প্রিয়জনের ভবিষ্যতের জন্য একটি বড় পদক্ষেপ নিন:",closing:"ভবিষ্যৎ আপনার সামনে — একটি অনন্য সুযোগ",tg:"Telegram চ্যানেল",ig:"Instagram",sup:"সহায়তা",buy:"এখনই টোকেন কিনুন"},
+ uk:{dir:"ltr",title:"Ласкаво просимо до великої родини ARK",intro:"Приєднуючись до великого проєкту ARK та користуючись перевагами нижче, ви робите великий крок для свого майбутнього та близьких:",closing:"Майбутнє перед вами — неповторна возможность",tg:"Канал Telegram",ig:"Instagram",sup:"Підтримка",buy:"Купити токен зараз"},
+ vi:{dir:"ltr",title:"Chào mừng đến với đại gia đình ARK",intro:"Tham gia dự án ARK vĩ đại và hưởng các ưu điểm dưới đây, hãy bước một bước lớn cho tương lai của bạn và những người thân yêu:",closing:"Tương lai đang phía trước — cơ hội không lặp lại",tg:"Kênh Telegram",ig:"Instagram",sup:"Hỗ trợ",buy:"Mua Token Ngay"},
+ th:{dir:"ltr",title:"ยินดีต้อนรับสู่ครอบครัว ARK",intro:"โดยการเข้าร่วมโครงการ ARK อันยิ่งใหญ่และรับประโยชน์จากข้อดีด้านล่าง ก้าวอย่างมั่นคงเพื่ออนาคตของคุณและคนที่คุณรัก:",closing:"อนาคตอยู่เบื้องหน้าคุณ — โอกาสที่ไม่ซ้ำ",tg:"ช่อง Telegram",ig:"Instagram",sup:"สนับสนุน",buy:"ซื้อโทเค็นตอนนี้"}
+};
+function setLang(code){
+  const t=T[code], f=F[code], rtl=document.documentElement;
+  rtl.lang=code; rtl.dir=t.dir;
+  document.getElementById("t_title").textContent=t.title;
+  document.getElementById("t_intro").textContent=t.intro;
+  document.getElementById("t_features").innerHTML=f.map((x,i)=>"<li>"+(i+1)+". "+x+"</li>").join("");
+  document.getElementById("t_closing").textContent=t.closing;
+  document.getElementById("t_telegram").textContent=t.tg;
+  document.getElementById("t_instagram").textContent=t.ig;
+  document.getElementById("t_support").textContent=t.sup;
+  document.getElementById("t_buy").textContent=t.buy;
+}
+setLang("fa");
 </script>
-
 </body>
 </html>
